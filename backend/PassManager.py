@@ -34,6 +34,19 @@ d) When not in use, the key is zipped with a password (the master password). Thi
 8) Make sure names for passwords are unique within the vault
 9) Make sure that the user can change the master password
 """
+def removepassword(key):
+    decrypt("Vault.csv",key)
+    df=pd.read_csv(r"Valut.csv")
+    table = df.values.tolist()
+    newCompany = input("Password Name: ")
+    for x in table:
+        if x[0]==newCompany:
+            table.remove(x)
+    newCompany = input("Password Name: ")
+    newPass = generatePassword()
+    table.append([newCompany,newPass])
+    pd.DataFrame(table).to_csv("Vault.csv",index=False)
+    encrypt("Vault.csv", getFernetKey("Input Password to Save Changes"))#then encrypt it again
 
 def generatePassword(): #generates a random 12 character password. For later use
 	newpass = ''.join(random.choice(string.printable) for _ in range(16))
@@ -92,6 +105,20 @@ def createPasswordTable():
 	pd.DataFrame(table).to_csv("Vault.csv",index=False)
 	encrypt("Vault.csv", getFernetKey("Please Enter Password to lock the Password Vault")) #encrypt the Vault
 
+def removepassword(key):
+    decrypt("Vault.csv",key)
+    df=pd.read_csv(r"Valut.csv")
+    table = df.values.tolist()
+    newCompany = input("Password Name: ")
+    for x in table:
+        if x[0]==newCompany:
+            table.remove(x)
+    newCompany = input("Password Name: ")
+    newPass = generatePassword()
+    table.append([newCompany,newPass])
+    pd.DataFrame(table).to_csv("Vault.csv",index=False)
+    encrypt("Vault.csv", getFernetKey("Input Password to Save Changes"))#then encrypt it again
+
 def addToPasswordTable(key):
 	decrypt("Vault.csv", key)#decrypt Vault
 	df = pd.read_csv (r"Vault.csv")
@@ -149,6 +176,8 @@ def returning(key):
 		if "2" in options:
 			addToPasswordTable(key) #add to the table of passwords
 		if "3" in options:
+			removepassword(key) #remove passwords
+		if "4" in options:
 			ask = False
 			print("Goodbye!")
 
