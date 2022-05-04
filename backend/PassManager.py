@@ -149,6 +149,8 @@ def returning(key):
 		if "2" in options:
 			addToPasswordTable(key) #add to the table of passwords
 		if "3" in options:
+			removepassword(key) #remove passwords
+		if "4" in options:
 			ask = False
 			print("Goodbye!")
 
